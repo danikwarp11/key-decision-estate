@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог недвижимости в Твери — Ключевое решение</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Шапка сайта с яркой контрастной навигацией -->
+    <header class="header">
+        <div class="container header__container">
+            <div class="logo">🔑 Ключевое решение • Тверь</div>
+<nav class="nav">
+    <a href="index.html" class="nav__link">Главная</a>
+    <a href="catalog.html" class="nav__link">Каталог</a>
+    <a href="services.html" class="nav__link">Услуги</a>
+    <a href="contacts.html" class="nav__link">Контакты</a>
+</nav>
+
+            <div class="header__contacts">
+                <a href="tel:+74822123456" class="phone">+7 (4822) 12-34-56</a>
+                <button class="btn btn--primary">Оставить заявку</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container catalog-page">
+        <!-- Хлебные крошки -->
+        <div class="breadcrumbs">
+            <a href="#">Главная</a> / <a href="#">Каталог</a> / <span>Недвижимость в Твери</span>
+        </div>
+
+        <h1 class="catalog-title">Каталог недвижимости в Твери</h1>
+        <div class="catalog-subtitle">Найдено 412 объектов премиум-класса</div>
+
+        <div class="catalog-layout">
+            <!-- Боковой фильтр со всеми удобствами и районами Твери -->
+            <aside class="filter-sidebar">
+                <div class="sidebar-header">
+                    <h3>Фильтры</h3>
+                    <button type="button" class="btn-clear">Сбросить</button>
+                </div>
+
+                <form id="advancedFilter">
+                    <!-- Поиск по районам Твери -->
+                    <div class="filter-section">
+                        <label for="districtSelect">Район города</label>
+                        <select id="districtSelect" name="district">
+                            <option value="">Все районы</option>
+                            <option value="Центральный">Центральный район</option>
+                            <option value="Заволжский">Заволжский район</option>
+                            <option value="Московский">Московский район</option>
+                            <option value="Пролетарский">Пролетарский район</option>
+                        </select>
+                    </div>
+
+                    <!-- Сортировка по цене и площади -->
+                    <div class="filter-section">
+                        <label for="sortSelect">Сортировать по</label>
+                        <select id="sortSelect" name="sortBy">
+                            <option value="price_asc">Сначала дешевле</option>
+                            <option value="price_desc">Сначала дороже</option>
+                            <option value="area_desc">По макс. площади</option>
+                            <option value="area_asc">По мин. площади</option>
+                        </select>
+                    </div>
+
+                    <!-- Диапазон цен -->
+                    <div class="filter-section">
+                        <label>Цена, ₽</label>
+                        <div class="range-inputs">
+                            <input type="number" id="priceMin" value="3000000" placeholder="от">
+                            <input type="number" id="priceMaxInput" value="16000000" placeholder="до">
+                        </div>
+                    </div>
+
+                    <!-- Диапазон площади -->
+                    <div class="filter-section">
+                        <label>Площадь, м²</label>
+                        <div class="range-inputs">
+                            <input type="number" id="areaMin" value="30" placeholder="от">
+                            <input type="number" id="areaMax" value="130" placeholder="до">
+                        </div>
+                    </div>
+
+                    <!-- Полный список удобств -->
+                    <div class="filter-section">
+                        <label>Удобства и опции</label>
+                        <div class="checkbox-list">
+                            <label><input type="checkbox" id="checkHeating"> Индивидуальное отопление</label>
+                            <label><input type="checkbox" id="checkAir"> Кондиционер</label>
+                            <label><input type="checkbox" id="checkParking"> Паркинг</label>
+                            <label><input type="checkbox" id="checkConcierge"> Консьерж</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--block">Применить фильтр</button>
+                </form>
+            </aside>
+            <!-- Контент каталога и сетка результатов -->
+            <section class="catalog-content">
+                <div class="sorting-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active">Все объекты</button>
+                    </div>
+                </div>
+
+                <div class="catalog-grid" id="catalogGrid">
+                    <!-- Квартира 1 -->
+                    <article class="flat-card" data-district="Центральный" data-price="8450000" data-area="68" data-heating="true" data-air="true" data-parking="true" data-concierge="false">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+                            <span class="badge badge--gold">Инд. отопление</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">8 450 000 ₽</div>
+                            <div class="flat-address">📍 Центральный р-н, ул. Радищева, 10</div>
+                            <div class="flat-tags"><span>📐 68 м²</span> • <span>❄️ Конд.</span> • <span>🚗 Паркинг</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Новостройка</span></div>
+                        </div>
+                    </article>
+
+                    <!-- Квартира 2 -->
+                    <article class="flat-card" data-district="Заволжский" data-price="6200000" data-area="54" data-heating="true" data-air="false" data-parking="false" data-concierge="false">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #2c3e50, #3498db);">
+                            <span class="badge badge--red">Отличная цена</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">6 200 000 ₽</div>
+                            <div class="flat-address">📍 Заволжский р-н, наб. Афанасия Никитина, 32</div>
+                            <div class="flat-tags"><span>📐 54 м²</span> • <span>🔥 Инд. отопл.</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Вторичное</span></div>
+                        </div>
+                    </article>
+
+                    <!-- Квартира 3 (ИСПРАВЛЕНО НА "Центральный р-н") -->
+                    <article class="flat-card" data-district="Центральный" data-price="14900000" data-area="115" data-heating="true" data-air="true" data-parking="true" data-concierge="true">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #0f2027, #2c5364);">
+                            <span class="badge badge--gold">Премиум</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">14 900 000 ₽</div>
+                            <div class="flat-address">📍 Центральный р-н, Тверской проспект, 3</div>
+                            <div class="flat-tags"><span>📐 115 м²</span> • <span>🚗 Паркинг</span> • <span>🛎️ Консьерж</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Пентхаус</span></div>
+                        </div>
+                    </article>
+
+                    <!-- Квартира 4 -->
+                    <article class="flat-card" data-district="Московский" data-price="4800000" data-area="42" data-heating="false" data-air="false" data-parking="false" data-concierge="false">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #bdc3c7, #2c3e50);"></div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">4 800 000 ₽</div>
+                            <div class="flat-address">📍 Московский р-н, ул. Орджоникидзе, 42</div>
+                            <div class="flat-tags"><span>📐 42 м²</span> • <span>Центр. отопл.</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Вторичное</span></div>
+                        </div>
+                    </article>
+
+                    <!-- Квартира 5 -->
+                    <article class="flat-card" data-district="Пролетарский" data-price="5500000" data-area="48" data-heating="false" data-air="true" data-parking="false" data-concierge="false">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">5 500 000 ₽</div>
+                            <div class="flat-address">📍 Пролетарский р-н, пр-т Калинина, 15</div>
+                            <div class="flat-tags"><span>📐 48 м²</span> • <span>❄️ Конд.</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Новостройка</span></div>
+                        </div>
+                    </article>
+
+                    <!-- Квартира 6 -->
+                    <article class="flat-card" data-district="Заволжский" data-price="11200000" data-area="92" data-heating="true" data-air="true" data-parking="true" data-concierge="true">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #8e2de2, #4a00e0);">
+                            <span class="badge badge--gold">Инд. отопление</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">11 200 000 ₽</div>
+                            <div class="flat-address">📍 Заволжский р-н, ул. Горького, 72</div>
+                            <div class="flat-tags"><span>📐 92 м²</span> • <span>🚗 Паркинг</span> • <span>🛎️ Консьерж</span></div>
+                            <div class="flat-footer"><button class="btn btn--dark-outline">Подробнее</button><span class="flat-status">Новостройка</span></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Форма подбора для Твери -->
+    <section class="cta-banner">
+        <div class="container cta-banner__container">
+            <div>
+                <h2>Не нашли подходящий вариант в Твери?</h2>
+                <p>Подберем квартиру под ваши требования за 10 минут.</p>
+            </div>
+            <form class="cta-banner__form">
+                <input type="tel" placeholder="+7 (999) 000-00-00" required>
+                <button type="submit" class="btn btn--primary">Подобрать объект</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Подвал сайта -->
+    <footer class="footer">
+        <div class="container footer__grid">
+            <div>
+                <h4>🔑 Ключевое решение • Тверь</h4>
+                <p>Продажа премиальной жилой недвижимости в Тверской области.</p>
+            </div>
+            <div>
+                <h4>Контакты офиса</h4>
+                <p>г. Тверь, ул. Радищева, д. 12</p>
+                <p>sales-tver@keydecision.ru</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Логика работы умных фильтров -->
+    <script src="app.js"></script>
+</body>
+</html>

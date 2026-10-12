@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Агентство недвижимости «Ключевое решение» — Тверь</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Шапка сайта (с яркими, контрастными кнопками навигации) -->
+    <header class="header">
+        <div class="container header__container">
+            <div class="logo">🔑 Ключевое решение • Тверь</div>
+<nav class="nav">
+    <a href="index.html" class="nav__link">Главная</a>
+    <a href="catalog.html" class="nav__link">Каталог</a>
+    <a href="services.html" class="nav__link">Услуги</a>
+    <a href="contacts.html" class="nav__link">Контакты</a>
+</nav>
+            <div class="header__contacts">
+                <a href="tel:+74822000000" class="phone">+7 (4822) 12-34-56</a>
+                <button class="btn btn--primary" id="openModalBtn">Оставить заявку</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Главный экран (Hero) под Тверь -->
+        <section class="hero">
+            <div class="container hero__container">
+                <span class="hero__badge">О компании с 2018 года</span>
+                <h1 class="hero__title">Найдите свой ключ к идеальной жизни в Твери</h1>
+                <p class="hero__subtitle">Ваш надежный партнер в сфере премиальной и современной недвижимости в Тверском регионе.</p>
+                
+                <!-- Статистика из пункта 1.4 ТЗ -->
+                <div class="hero__stats">
+                    <div class="stat-item">
+                        <strong id="stat-count">412</strong>
+                        <span>объектов в базе</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong>8+</strong>
+                        <span>лет на рынке</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong id="stat-percent">98%</strong>
+                        <span>сделок без срывов</span>
+                    </div>
+                </div>
+                <!-- Тверская многокритериальная форма поиска (Пункт 1.2 ТЗ) -->
+                <div class="search-filter">
+                    <form id="mainFilterForm" class="filter-form" action="catalog.html" method="GET">
+                        <!-- Тип операции -->
+                        <div class="filter-group filter-group--toggle">
+                            <input type="radio" id="opBuy" name="operationType" value="buy" checked>
+                            <label for="opBuy">Купить</label>
+                            <input type="radio" id="opRent" name="operationType" value="rent">
+                            <label for="opRent">Снять</label>
+                        </div>
+
+                        <!-- Поиск по районам Твери -->
+                        <div class="filter-group">
+                            <label for="locationSelect">Район</label>
+                            <select id="locationSelect" name="location">
+                                <option value="">Все районы</option>
+                                <option value="Центральный">Центральный р-н</option>
+                                <option value="Заволжский">Заволжский р-н</option>
+                                <option value="Московский">Московский р-н</option>
+                                <option value="Пролетарский">Пролетарский р-н</option>
+                            </select>
+                        </div>
+
+                        <!-- Тип жилья -->
+                        <div class="filter-group">
+                            <label for="realtyType">Тип жилья</label>
+                            <select id="realtyType" name="realtyType">
+                                <option value="">Любой тип</option>
+                                <option value="Новостройка">Новостройка</option>
+                                <option value="Вторичное">Вторичное жилье</option>
+                                <option value="Коттедж">Дома и участки</option>
+                            </select>
+                        </div>
+
+                        <!-- Цена до -->
+                        <div class="filter-group">
+                            <label for="priceMax">Цена до, ₽</label>
+                            <input type="number" id="priceMax" name="priceMax" placeholder="До 15 млн" min="0">
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--search">Найти</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- Категории недвижимости в Твери -->
+        <section class="categories section">
+            <div class="container">
+                <h2 class="section__title">Категории недвижимости</h2>
+                <div class="categories__grid">
+                    <div class="category-card"><h3>Квартиры</h3><span class="count">180 объектов</span></div>
+                    <div class="category-card"><h3>Новостройки</h3><span class="count">145 объектов</span></div>
+                    <div class="category-card"><h3>Загородная</h3><span class="count">52 объекта</span></div>
+                    <div class="category-card"><h3>Индивидуальное отопление</h3><span class="count">35 объектов</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Популярные объекты в Твери -->
+        <section class="products section">
+            <div class="container">
+                <h2 class="section__title">Популярные объекты</h2>
+                <div class="catalog-grid">
+                    <!-- Тверская карточка 1 -->
+                    <article class="flat-card">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #1e3c72, #2a5298); height: 160px;">
+                            <span class="badge badge--gold" style="position:initial; margin:15px; display:inline-block;">Инд. отопление</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">8 450 000 ₽</div>
+                            <div class="flat-address">📍 Центральный р-н, ул. Радищева, 10</div>
+                            <div class="flat-tags"><span>📐 68 м²</span> • <span>❄️ Кондиционер</span></div>
+                            <div class="flat-footer">
+                                <a href="catalog.html" class="btn btn--dark-outline" style="text-decoration:none;">Подробнее</a>
+                                <span class="flat-status">Готов к сделке</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Тверская карточка 2 -->
+                    <article class="flat-card">
+                        <div class="flat-card__image" style="background: linear-gradient(135deg, #2c3e50, #3498db); height: 160px;">
+                            <span class="badge badge--red" style="position:initial; margin:15px; display:inline-block;">Хит продаж</span>
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">6 200 000 ₽</div>
+                            <div class="flat-address">📍 Заволжский р-н, наб. Афанасия Никитина, 32</div>
+                            <div class="flat-tags"><span>📐 54 м²</span> • <span>🔥 Газовый котел</span></div>
+                            <div class="flat-footer">
+                                <a href="catalog.html" class="btn btn--dark-outline" style="text-decoration:none;">Подробнее</a>
+                                <span class="flat-status">Свободная</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- Блок "Почему выбирают Ключевое решение" -->
+        <section class="cta-banner">
+            <div class="container cta-banner__container">
+                <div>
+                    <h2>Не нашли то, что искали в Твери?</h2>
+                    <p>Наши риелторы подберут квартиру за 15 минут — оставьте номер телефона.</p>
+                </div>
+                <form class="cta-banner__form">
+                    <input type="tel" placeholder="+7 (999) 000-00-00" required>
+                    <button type="submit" class="btn btn--primary">Подобрать квартиру →</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Тверской подвал -->
+    <footer class="footer">
+        <div class="container footer__grid">
+            <div>
+                <h4>🔑 Ключевое решение • Тверь</h4>
+                <p>Премиальная недвижимость и юридическое сопровождение сделок в Тверском регионе.</p>
+            </div>
+            <div>
+                <h4>Контакты офиса</h4>
+                <p>г. Тверь, ул. Радищева, д. 12</p>
+                <p><strong>+7 (4822) 12-34-56</strong></p>
+                <p>sales-tver@keydecision.ru</p>
+            </div>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
