@@ -391,3 +391,60 @@ body {
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     margin-top: 30px;
 }
+/* --- СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(7, 17, 32, 0.6); /* Полупрозрачный темный фон */
+    backdrop-filter: blur(4px);        /* Легкое размытие заднего плана */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: var(--border-radius-lg);
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.3s ease;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--accent-gold);
+}
+
+.modal-box h3 {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.modal-box p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

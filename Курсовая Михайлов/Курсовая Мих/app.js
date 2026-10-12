@@ -11,47 +11,85 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 2. ЛОГИКА ДЛЯ СТРАНИЦЫ КАТАЛОГА (Умный фильтр и сортировка)
+    // 2. ЛОГИКА ДЛЯ СТРАНИЦЫ КАТАЛОГА (Интеграция с SQL Server)
     if (window.location.pathname.includes("catalog.html")) {
-        const filterForm = document.getElementById("advancedFilter");
         const gridContainer = document.getElementById("catalogGrid");
-        
-        // Предотвращаем падение скрипта, если на странице каталога нет нужной формы или контейнера
-        if (!filterForm || !gridContainer) return;
+        const filterForm = document.getElementById("advancedFilter");
+        let cards = []; // Сюда сохранятся созданные карточки
 
-        const cards = Array.from(gridContainer.querySelectorAll(".flat-card"));
+        // Функция загрузки данных из бэкенда
+        async function loadFlatsFromDB() {
+            try {
+                // Запрос к Node.js серверу (маршрут /api/flats маленькими буквами)
+                const response = await fetch('http://localhost:3000/api/flats');
+                const flats = await response.json();
+                
+                if (!gridContainer) return;
+                gridContainer.innerHTML = ''; // Очищаем статические карточки
 
-        // Подхватываем параметры из адресной строки при переходе с главной
-        const urlParams = new URLSearchParams(window.location.search);
-        const urlDistrict = urlParams.get("district");
-        const urlPriceMax = urlParams.get("priceMax");
+                // Перебираем 50 объектов из SQL и строим HTML
+                flats.forEach(flat => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'flat-card';
+                    
+                    // Прописываем data-атрибуты из колонок вашей БД
+                    cardElement.setAttribute('data-district', flat.district || '');
+                    cardElement.setAttribute('data-price', flat.price || 0);
+                    cardElement.setAttribute('data-area', flat.area || 0);
+                    cardElement.setAttribute('data-heating', String(flat.heating));
+                    cardElement.setAttribute('data-air', String(flat.air));
+                    cardElement.setAttribute('data-parking', String(flat.parking));
+                    cardElement.setAttribute('data-concierge', String(flat.concierge));
 
-        if (urlDistrict && document.getElementById("districtSelect")) {
-            document.getElementById("districtSelect").value = urlDistrict;
+                    // Наполнение шаблона карточки данными
+                    cardElement.innerHTML = `
+                        <div class="flat-card__image">
+                            <img src="${flat.image_url || 'images/placeholder.jpg'}" alt="Квартира" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <div class="flat-card__body">
+                            <div class="flat-price">${Number(flat.price).toLocaleString('ru-RU')} ₽</div>
+                            <div class="flat-address">📍 ${flat.district || ''}, ${flat.address || ''}</div>
+                            <div class="flat-tags" style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                <span style="background:#f0f2f5; padding: 4px 8px; border-radius:4px; font-size:0.85rem;">📐 ${flat.area || 0} м²</span>
+                                ${flat.heating ? '<span style="background:#fff4e6; color:#d97706; padding: 4px 8px; border-radius:4px; font-size:0.85rem;">🔥 Отопление</span>' : ''}
+                                ${flat.air ? '<span style="background:#e0f2fe; color:#0369a1; padding: 4px 8px; border-radius:4px; font-size:0.85rem;">❄️ Конд.</span>' : ''}
+                                ${flat.parking ? '<span style="background:#f0fdf4; color:#16a34a; padding: 4px 8px; border-radius:4px; font-size:0.85rem;">🚗 Паркинг</span>' : ''}
+                            </div>
+                        </div>
+                    `;
+                    
+                    gridContainer.appendChild(cardElement);
+                    cards.push(cardElement);
+                });
+
+                // Первичный запуск фильтрации (проверяет параметры из URL, если пришли с главной)
+                applyFilters();
+
+            } catch (error) {
+                console.error('Ошибка связи с бэкендом:', error);
+                if (gridContainer) {
+                    gridContainer.innerHTML = '<p style="color:red; padding:20px;">Ошибка: проверьте, запущен ли сервер Node.js!</p>';
+                }
+            }
         }
-        if (urlPriceMax && document.getElementById("priceMaxInput")) {
-            document.getElementById("priceMaxInput").value = urlPriceMax;
-        }
 
-        // Главная функция фильтрации и сортировки
+        // Запуск загрузки
+        loadFlatsFromDB();
+
+        // Главная функция умной фильтрации
         function applyFilters() {
-            // Получаем текущие значения всех фильтров
             const district = document.getElementById("districtSelect")?.value || "";
             const sortBy = document.getElementById("sortSelect")?.value || "price_asc";
-            
             const priceMin = parseFloat(document.getElementById("priceMin")?.value) || 0;
             const priceMax = parseFloat(document.getElementById("priceMaxInput")?.value) || Infinity;
-            
             const areaMin = parseFloat(document.getElementById("areaMin")?.value) || 0;
             const areaMax = parseFloat(document.getElementById("areaMax")?.value) || Infinity;
             
-            // Считываем ВСЕ чекбоксы (включая паркинг и консьержа)
             const reqHeating = document.getElementById("checkHeating")?.checked || false;
             const reqAir = document.getElementById("checkAir")?.checked || false;
             const reqParking = document.getElementById("checkParking")?.checked || false;
             const reqConcierge = document.getElementById("checkConcierge")?.checked || false;
 
-            // Проходимся по каждой карточке и проверяем условия
             cards.forEach(card => {
                 const cDistrict = card.getAttribute("data-district");
                 const cPrice = parseFloat(card.getAttribute("data-price"));
@@ -61,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const cParking = card.getAttribute("data-parking") === "true";
                 const cConcierge = card.getAttribute("data-concierge") === "true";
 
-                // Проверяем совпадение по всем критериям
                 const matchDistrict = !district || cDistrict === district;
                 const matchPrice = cPrice >= priceMin && cPrice <= priceMax;
                 const matchArea = cArea >= areaMin && cArea <= areaMax;
@@ -71,13 +108,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const matchConcierge = !reqConcierge || cConcierge === true;
 
                 if (matchDistrict && matchPrice && matchArea && matchHeating && matchAir && matchParking && matchConcierge) {
-                    card.style.display = "block"; // Показываем
+                    card.style.display = "block";
                 } else {
-                    card.style.display = "none"; // Прячем
+                    card.style.display = "none";
                 }
             });
 
-            // Сортировка видимых карточек
+            // Сортировка
             const visibleCards = cards.filter(c => c.style.display !== "none");
             visibleCards.sort((a, b) => {
                 const priceA = parseFloat(a.getAttribute("data-price"));
@@ -92,27 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return 0;
             });
 
-            // Перерисовываем отсортированные карточки в контейнере
             visibleCards.forEach(card => gridContainer.appendChild(card));
         }
 
-        // Запускаем фильтрацию сразу при загрузке страницы
-        applyFilters();
-
-        // Живой фильтр: реагирует на любые изменения в форме (без нажатия кнопки)
-        filterForm.addEventListener("change", applyFilters);
-        filterForm.addEventListener("input", applyFilters);
-
-        // Навешиваем событие на отправку формы (на всякий случай)
-        filterForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            applyFilters();
-        });
-
-        // Навешиваем событие на кнопку "Сбросить"
-        document.querySelector(".btn-clear")?.addEventListener("click", () => {
-            filterForm.reset();
-            applyFilters();
-        });
+        // Слушатели изменений для живого фильтра
+        filterForm?.addEventListener("change", applyFilters);
+        filterForm?.addEventListener("input", applyFilters);
     }
 });
